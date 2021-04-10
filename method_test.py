@@ -1,5 +1,5 @@
 import cv2
-from Pillow import Image
+from PIL import Image
 
 methods = [
     cv2.THRESH_BINARY,
@@ -21,3 +21,14 @@ for method in methods:
     _, treated_image = cv2.threshold(
         image_gray, 127, 255, method or cv2.THRESH_OTSU)
     cv2.imwrite(f"method_test/treated_image_{i}.png", treated_image)
+
+image = Image.open('method_test/treated_image_3.png')
+image = image.convert('P')
+image2 = Image.new('P', image.size, 255)
+
+for x in range(image.size[1]):  # Para cada Coluna da Imagem
+    for y in range(image.size[0]):  # Para cada Linha da Imagem
+        pixel_color = image.getpixel((y, x))
+        if pixel_color < 115:
+            image2.putpixel((y, x), 0)
+image2.save('method_test(new_images)/finalimage.png')
