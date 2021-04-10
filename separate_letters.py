@@ -35,7 +35,7 @@ for file in files:
         letter_image = image[y-2:y+height+2, x-2:x+width+2]
         i += 1
         file_name = os.path.basename(file).replace(".png", f"letra{i}.png")
-        cv2.imwrite(f'letters/{file_name}', letter_image)
-        cv2.rectangle(final_image, (x-2, y-2),(x+width+2, y+height+2), (255, 0, 0), 1)
+        cv2.imwrite(f'letras/{file_name}', letter_image)
+        cv2.rectangle(final_image, (x-2, y-2), (x+width+2, y+height+2), (0, 0, 255), 1)
     file_name = os.path.basename(file)
-    cv2.inwrite(f"letters_id/{file_name}", final_image)
+    cv2.imwrite(f"identificado/{file_name}", final_image)
