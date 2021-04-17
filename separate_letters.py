@@ -11,7 +11,8 @@ for file in files:
     _, new_image = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY_INV)
 
     # Encontear os contornos de cada letra
-    contours, _ = cv2.findContours(new_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(
+        new_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     letters_region = []
 
@@ -38,8 +39,6 @@ for file in files:
         cv2.imwrite(f'letters/{file_name}', letter_image)
         cv2.rectangle(final_image, (x-2, y-2), (x+width+2, y+height+2), (0, 0, 255), 1)
     file_name = os.path.basename(file)
-<<<<<<< HEAD
     cv2.imwrite(f"letters_id/{file_name}", final_image)
-=======
+
     cv2.imwrite(f"letters_id/{file_name}", final_image)
->>>>>>> 6fb25de3ec342b58ac0bce3c6035dbc6fd6f05e1
