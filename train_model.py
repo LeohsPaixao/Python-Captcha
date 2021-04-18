@@ -30,8 +30,17 @@ for archive in images:
     # Adicionar uma nova dimensão para o Keras poder ler a imagem
     image = np.expand_dims(image, axis=2)
 
-    #Adicionar as listas de dados e de rotulos
+    # Adicionar as listas de dados e de rotulos
     labels.append(labels)
     data.append(image)
 
-    
+data = np.array(data, dtype="float") / 255
+labels = np.array(labels)
+
+# Separação em dados de treino(75%) e dados de teste (25$)
+(X_train, X_test, Y_train, Y_test) = train_test_split(data, labels, test_size=0.25, random_state=0)
+
+# Converter com one-hot encoding os rotulos, ja que são texto
+lb = LabelBinarizer().fit(Y_train)
+Y_train = lb.transform(Y_train)
+Y_test = lb.transform(Y_test)
