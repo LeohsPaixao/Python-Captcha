@@ -48,3 +48,14 @@ Y_test = lb.transform(Y_test)
 # Salvar o labelbinarizer em um arquivo com o pickle
 with open('model_labels.dat', 'wb') as archive_pickle:
     pickle.dump(lb, archive_pickle) # Qual variavel e qual o arquivo
+
+
+# Criação do IA e treinamento dela
+model = Sequential()
+
+# Criar as camadas da rede neural
+model.add(Conv2D(20, (5, 5), padding="same", input_shape=(20, 20, 1), activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+
+
