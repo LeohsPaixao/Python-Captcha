@@ -54,8 +54,20 @@ with open('model_labels.dat', 'wb') as archive_pickle:
 model = Sequential()
 
 # Criar as camadas da rede neural
+# 1° Camada
 model.add(Conv2D(20, (5, 5), padding="same", input_shape=(20, 20, 1), activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
+# 2° Camada
+model.add(Conv2D(50, (5, 5), padding="same", activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
+# 3° Camada
+model.add(Flatten())
+model.add(Dense(500, activation="relu"))
 
+# Camada de Saida
+model.add(Dense(26, activation="softmax"))
+
+# Compilar todas as camadas
+model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
