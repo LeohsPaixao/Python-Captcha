@@ -71,3 +71,9 @@ model.add(Dense(26, activation="softmax"))
 
 # Compilar todas as camadas
 model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+
+# treinar a IA
+model.fit(X_train, Y_train, validation_data=(X_test, Y_test), batch_size=26, epochs=10, verbose=1)
+
+# Salvar o modelo em um arquivo
+model.save("trained_model.hdf5")
