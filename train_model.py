@@ -40,7 +40,11 @@ labels = np.array(labels)
 # Separação em dados de treino(75%) e dados de teste (25$)
 (X_train, X_test, Y_train, Y_test) = train_test_split(data, labels, test_size=0.25, random_state=0)
 
-# Converter com one-hot encoding os rotulos, ja que são texto
+# Converter os rotulos com one-hot encoding , pois somente os rotulos são texto
 lb = LabelBinarizer().fit(Y_train)
 Y_train = lb.transform(Y_train)
 Y_test = lb.transform(Y_test)
+
+# Salvar o labelbinarizer em um arquivo com o pickle
+with open('model_labels.dat', 'wb') as archive_pickle:
+    pickle.dump(lb, archive_pickle) # Qual variavel e qual o arquivo
