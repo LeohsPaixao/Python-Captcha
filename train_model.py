@@ -12,15 +12,13 @@ from helpers import resize_to_fit
 
 
 data = []
-
 labels = []
-
 folder_letters_base = "letters_base"
-
 images = paths.list_images(folder_letters_base)
 
 for archive in images:
-    labels = archive.split(os.path.sep)[-2] # seperando os dados, os texto, tirando o contrabarra
+    # seperando os dados, os texto, tirando o contrabarra
+    labels = archive.split(os.path.sep)[-2]
     image = cv2.imread(archive)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -38,7 +36,8 @@ data = np.array(data, dtype="float") / 255
 labels = np.array(labels)
 
 # Separação em dados de treino(75%) e dados de teste (25$)
-(X_train, X_test, Y_train, Y_test) = train_test_split(data, labels, test_size=0.25, random_state=0)
+(X_train, X_test, Y_train, Y_test) = train_test_split(
+    data, labels, test_size=0.25, random_state=0)
 
 # Converter os rotulos com one-hot encoding , pois somente os rotulos são texto
 lb = LabelBinarizer().fit(Y_train)
@@ -47,7 +46,7 @@ Y_test = lb.transform(Y_test)
 
 # Salvar o labelbinarizer em um arquivo com o pickle
 with open('model_labels.dat', 'wb') as archive_pickle:
-    pickle.dump(lb, archive_pickle) # Qual variavel e qual o arquivo
+    pickle.dump(lb, archive_pickle)  # Qual variavel e qual o arquivo
 
 
 # Criação do IA e treinamento dela
@@ -55,7 +54,8 @@ model = Sequential()
 
 # Criar as camadas da rede neural
 # 1° Camada
-model.add(Conv2D(20, (5, 5), padding="same", input_shape=(20, 20, 1), activation="relu"))
+model.add(Conv2D(20, (5, 5), padding="same",
+          input_shape=(20, 20, 1), activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 # 2° Camada
@@ -70,10 +70,12 @@ model.add(Dense(500, activation="relu"))
 model.add(Dense(26, activation="softmax"))
 
 # Compilar todas as camadas
-model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+model.compile(loss="categorical_crossentropy",
+              optimizer="adam", metrics=["accuracy"])
 
 # treinar a IA
-model.fit(X_train, Y_train, validation_data=(X_test, Y_test), batch_size=26, epochs=10, verbose=1)
+model.fit(X_train, Y_train, validation_data=(
+    X_test, Y_test), batch_size=26, epochs=10, verbose=1)
 
 # Salvar o modelo em um arquivo
 model.save("trained_model.hdf5")
